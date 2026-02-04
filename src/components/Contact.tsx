@@ -1,18 +1,41 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Send } from "lucide-react";
-import { useState } from "react";
+import { Mail, MapPin, Phone, Send, CheckCircle, XCircle } from "lucide-react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    // EmailJS configuration - Replace these with your actual IDs from https://www.emailjs.com/
+    const SERVICE_ID = "service_pduqtlm";     // e.g., "service_abc123"
+    const TEMPLATE_ID = "template_ev0voqk";   // e.g., "template_xyz789"
+    const PUBLIC_KEY = "FNbnGPRrZRz26KrIr";     // e.g., "abcdefghijk123456"
+
+    emailjs
+      .sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current!, PUBLIC_KEY)
+      .then(() => {
+        setSubmitStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        setSubmitStatus("error");
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   const handleChange = (
@@ -149,7 +172,7 @@ const Contact = () => {
                 </div>
               </motion.div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
@@ -209,13 +232,49 @@ const Contact = () => {
 
                 <motion.button
                   type="submit"
-                  className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center space-x-2 font-poppins"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center space-x-2 font-poppins disabled:opacity-50 disabled:cursor-not-allowed"
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                 >
-                  <Send size={20} />
-                  <span>Launch Message</span>
+                  {isSubmitting ? (
+                    <>
+                      <motion.div
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      />
+                      <span>Launching...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} />
+                      <span>Launch Message</span>
+                    </>
+                  )}
                 </motion.button>
+
+                {submitStatus === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center space-x-2 text-green-400 font-poppins"
+                  >
+                    <CheckCircle size={20} />
+                    <span>Message sent successfully!</span>
+                  </motion.div>
+                )}
+
+                {submitStatus === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center space-x-2 text-red-400 font-poppins"
+                  >
+                    <XCircle size={20} />
+                    <span>Failed to send. Please try again.</span>
+                  </motion.div>
+                )}
               </form>
             </div>
           </motion.div>

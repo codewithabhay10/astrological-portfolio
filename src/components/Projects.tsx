@@ -22,15 +22,21 @@ const Projects = () => {
 
   const projects: Project[] = [
     {
-      title: "Yojana Guru",
+      title: "Sahay (PM-AJAY Digital Welfare Platform)",
       description:
-        "An AI-powered platform that helps users discover personalized government schemes through multilingual chatbot support, voice search, and smart filtering based on user profiles.",
-      color: "from-red-500 to-orange-500",
-      tech: ["React.js", "Express", "Groq", "Node.js"],
-      image:
-        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
-      source: "https://github.com/codewithabhay10/YojanaGuru-Main",
-      demo: "https://github.com/codewithabhay10/YojanaGuru-Main",
+        "SIH 2025 winning end-to-end digital ecosystem to improve beneficiary identification, tracking, and welfare delivery under PM-AJAY using AI/ML, multilingual interfaces, and secure data systems.",
+      color: "from-indigo-500 to-purple-600",
+      tech: [
+        "Next.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "GenAI (RAG)",
+        "Speech Recognition",
+      ],
+      image: "Sahay.jpg",
+      source: "https://github.com/codewithabhay10/SIH-Project-Sahay",
+      demo: "https://sih-project-sahay.vercel.app",
     },
     {
       title: "Health-Chat-Nexus",
@@ -38,21 +44,20 @@ const Projects = () => {
         "AI-powered platform that pre-screens symptoms through smart chatbots and connects patients with doctors via seamless video consultations.",
       color: "from-orange-500 to-yellow-500",
       tech: ["React.js", "TensorFlow", "Node.js", "NLP"],
-      image:
-        "Health-chat-nexus.png",
+      image: "Health-chat-nexus.png",
       source: "https://github.com/codewithabhay10/health-chat-nexus",
       demo: "https://health-chat-nexus.vercel.app",
     },
     {
-      title: "Pixel Patrika",
+      title: "Not Cursor",
       description:
-        "E-commerce platform for selling posters built using Next.js with Stripe payment integration and MongoDB backend.",
-      color: "from-purple-500 to-pink-500",
-      tech: ["Next.js", "Stripe", "MongoDB"],
+        "A locally hosted AI-powered code assistant that uses LangGraph and Ollama to automatically modify and commit code changes based on natural language prompts.",
+      color: "from-gray-800 to-gray-900",
+      tech: ["Python", "Flask", "LangGraph", "Ollama"],
       image:
-        "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
-      source: "https://github.com/codewithabhay10/e-commerce",
-      demo: "https://github.com/codewithabhay10/e-commerce",
+        "not-cursor.png",
+      source: "https://github.com/codewithabhay10/not-cursor-main",
+      demo: "https://github.com/codewithabhay10/not-cursor-main",
     },
     {
       title: "ShaktiGuard",
@@ -61,7 +66,7 @@ const Projects = () => {
       color: "from-blue-500 to-cyan-500",
       tech: ["React.js", "Twilio", "GrasshopperAPI"],
       image:
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
+        "women-safety.png",
       source: "https://github.com/codewithabhay10/womenSafety",
       demo: "https://www.youtube.com/watch?v=7LM3aXWTesc",
     },
@@ -107,7 +112,7 @@ const Projects = () => {
             duration: 1,
             ease: "none",
           },
-          (i - 1) * 1
+          (i - 1) * 1,
         );
 
         // Previous card scales down and darkens
@@ -119,7 +124,7 @@ const Projects = () => {
             duration: 1,
             ease: "none",
           },
-          (i - 1) * 1
+          (i - 1) * 1,
         );
       });
     }, sectionRef);
